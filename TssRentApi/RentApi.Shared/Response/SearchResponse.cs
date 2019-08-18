@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using RentApi.Shared.Dto;
 
-namespace RentApi.Shared
+namespace RentApi.Shared.Response
 {
     public class SearchResponse : BaseResponse
     {

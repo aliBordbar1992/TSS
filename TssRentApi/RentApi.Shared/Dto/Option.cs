@@ -1,4 +1,4 @@
-﻿namespace RentApi.Shared
+﻿namespace RentApi.Shared.Dto
 {
     public class Option
     {

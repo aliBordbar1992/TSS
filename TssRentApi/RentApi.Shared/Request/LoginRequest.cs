@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace RentApi.Shared
+﻿namespace RentApi.Shared.Request
 {
     public class LoginRequest
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RentApi.Shared
+namespace RentApi.Shared.Dto
 {
     public static class StringExtensions
     {

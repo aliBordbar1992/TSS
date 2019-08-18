@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RentApi.Shared
+namespace RentApi.Shared.Response
 {
     public class BaseResponse
     {

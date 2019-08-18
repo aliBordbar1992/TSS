@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using RentApi.Shared.Dto;
 
-namespace RentApi.Shared
+namespace RentApi.Shared.Request
 {
     public class ReserveRequest
     {
@@ -33,26 +34,7 @@ namespace RentApi.Shared
         public string FlightNumber { get; }
         public string Email { get; }
         public List<Driver> Driver { get; set; }
-        public List<Equipment> Equipments { get; set; }
-        public List<Option> Optional { get; set; }
-    }
-
-    public class Driver
-    {
-        public Driver(string mobile, string title, string firstNameEn, string lastNameEn)
-        {
-            Mobile = mobile;
-            Title = title;
-            FirstNameEn = firstNameEn;
-            LastNameEn = lastNameEn;
-        }
-
-        public string Mobile { get; }
-        public string Title { get; }
-        public string FirstNameEn { get; }
-        public string LastNameEn { get; }
-        public string FirstNameFa { get; set; }
-        public string LastNameFa { get; set; }
-        public string EuropcarId { get; set; }
+        public List<string> Equipments { get; set; }
+        public List<string> Optional { get; set; }
     }
 }

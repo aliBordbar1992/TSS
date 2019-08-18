@@ -1,4 +1,6 @@
-﻿namespace RentApi.Shared
+﻿using RentApi.Shared.Dto;
+
+namespace RentApi.Shared.Request
 {
     public class StationsRequest
     {
