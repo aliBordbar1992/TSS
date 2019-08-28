@@ -1,4 +1,6 @@
-﻿namespace RentApi.Shared.Request
+﻿using System;
+
+namespace RentApi.Shared.Request
 {
     public class SearchRequest
     {
@@ -9,14 +11,14 @@
         public string CheckinDate { get; }
         public string CheckinTime { get; }
 
-        public SearchRequest(string checkoutStation, string checkoutDate, string checkoutTime, string checkinStation, string checkinDate, string checkinTime)
+        public SearchRequest(string checkoutStation, DateTime checkoutDateTime, string checkinStation, DateTime checkinDateTime)
         {
             CheckoutStation = checkoutStation;
-            CheckoutDate = checkoutDate;
-            CheckoutTime = checkoutTime;
+            CheckoutDate = checkoutDateTime.ToString("yyyyMMdd");
+            CheckoutTime = checkoutDateTime.ToString("HHmm");
             CheckinStation = checkinStation;
-            CheckinDate = checkinDate;
-            CheckinTime = checkinTime;
+            CheckinDate = checkinDateTime.ToString("yyyyMMdd");
+            CheckinTime = checkinDateTime.ToString("HHmm");
         }
     }
 }

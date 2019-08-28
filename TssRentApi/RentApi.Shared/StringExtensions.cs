@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace RentApi.Api
+namespace RentApi.Shared
 {
     public static class StringExtensions
     {
-        public static string ToJsonString(this object inp)
+        public static string ToJsonString(this object inp, NamingStrategy namingStrategy)
         {
             return JsonConvert.SerializeObject(
                 inp
@@ -15,19 +15,19 @@ namespace RentApi.Api
                     NullValueHandling = NullValueHandling.Ignore,
                     ContractResolver = new DefaultContractResolver()
                     {
-                        NamingStrategy = new SnakeCaseNamingStrategy()
+                        NamingStrategy = namingStrategy
                     }
                 });
         }
 
-        public static T ToObject<T>(this string jsonString)
+        public static T ToObject<T>(this string jsonString, NamingStrategy namingStrategy)
         {
             return JsonConvert.DeserializeObject<T>(jsonString, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Include,
                 ContractResolver = new DefaultContractResolver
                 {
-                    NamingStrategy = new SnakeCaseNamingStrategy()
+                    NamingStrategy = namingStrategy
                 }
             });
         }

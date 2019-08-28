@@ -1,4 +1,6 @@
-﻿namespace RentApi.Shared.Dto
+﻿using Newtonsoft.Json;
+
+namespace RentApi.Shared.Dto
 {
     public class Station
     {
@@ -6,6 +8,7 @@
         public string CityName { get; set; }
         public string StationCode { get; set; }
         public string StationName { get; set; }
+        [JsonConverter(typeof(AreaTypeConverter))]
         public AreaType AreaType { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }

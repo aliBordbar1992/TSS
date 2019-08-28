@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Serialization;
+using RentApi.Shared;
 using RentApi.Shared.Request;
 
 namespace RentApi.Api
@@ -10,23 +12,14 @@ namespace RentApi.Api
     public class ApiClient : IApiClient
     {
         private string _baseUrl;
+        private readonly NamingStrategy namingStrategy;
 
-
-        public ApiClient()
+        public ApiClient(IBaseUrl baseUrl)
         {
-        }
+            _baseUrl = baseUrl.GetUrl();
+            namingStrategy = new CamelCaseNamingStrategy();
 
-        public TRes GetToken<TRes>(string username, string password)
-        {
-            return GetTokenAsync<TRes>(username, password).Result;
         }
-
-        public async Task<TRes> GetTokenAsync<TRes>(string username, string password)
-        {
-            var path = new Paths.Login();
-            return await CallRemoteApiAsync<LoginRequest, TRes>(new LoginRequest(username, password), path);
-        }
-
 
         public TRes CallRemoteApi<TReq, TRes>(TReq request, ApiPathsBase path)
         {
@@ -63,7 +56,7 @@ namespace RentApi.Api
 
             if (path.GetHttpMethod() == HttpMethod.Post)
             {
-                string objectSerialized = request.ToJsonString();
+                string objectSerialized = request.ToJsonString(namingStrategy);
                 var contentToSend = new StringContent(objectSerialized, Encoding.UTF8, "application/json");
 
                 resp = await ProcessPostRequestAsync(contentToSend, path, client);
@@ -72,7 +65,7 @@ namespace RentApi.Api
             if (resp == null) throw new HttpRequestException($"{path.GetHttpMethod()} is not a valid request.");
 
             string result = await resp.Content.ReadAsStringAsync();
-            var response = result.ToObject<TRes>();
+            var response = result.ToObject<TRes>(namingStrategy);
             return response;
         }
 
@@ -89,7 +82,7 @@ namespace RentApi.Api
             client.BaseAddress = new Uri(path.GetUrl(_baseUrl));
 
             client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Client-Token", path.GetToken());
+            client.DefaultRequestHeaders.Add("token", path.GetToken());
             client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
         }
         public void SetBaseUrl(string url)

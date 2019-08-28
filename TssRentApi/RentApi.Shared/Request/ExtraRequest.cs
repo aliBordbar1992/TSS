@@ -1,20 +1,21 @@
-﻿using RentApi.Shared.Dto;
+﻿using System;
+using RentApi.Shared.Dto;
 
 namespace RentApi.Shared.Request
 {
     public class ExtraRequest
     {
-        public ExtraRequest(string checkoutStation, string checkoutTime, string checkinStation, string checkinDate, string checkinTime, string contractId, string carCategoryCode, string checkoutDate)
+        public ExtraRequest(string checkoutStation, DateTime checkoutDateTime, string checkinStation, DateTime checkinDateTime, string contractId, string carCategoryCode)
         {
             CheckoutStation = checkoutStation;
             CheckinStation = checkinStation;
             
-            CheckoutDate = checkoutDate.CheckDateFormat("yyyyMMdd");
-            CheckoutTime = checkoutTime.CheckDateFormat("HHmm");
-            CheckinDate = checkinDate.CheckDateFormat("yyyyMMdd");
-            CheckinTime = checkinTime.CheckDateFormat("HHmm");
+            CheckoutDate = checkoutDateTime.ToString("yyyyMMdd");
+            CheckoutTime = checkoutDateTime.ToString("HHmm");
+            CheckinDate = checkinDateTime.ToString("yyyyMMdd");
+            CheckinTime = checkinDateTime.ToString("HHmm");
 
-            ContractId = contractId;
+            ContractID = contractId;
             CarCategoryCode = carCategoryCode;
         }
 
@@ -24,7 +25,7 @@ namespace RentApi.Shared.Request
         public string CheckinStation { get; }
         public string CheckinDate { get; }
         public string CheckinTime { get; }
-        public string ContractId { get; }
+        public string ContractID { get; }
         public string CarCategoryCode { get; }
 
 

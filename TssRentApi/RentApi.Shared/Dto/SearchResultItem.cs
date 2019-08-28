@@ -1,8 +1,12 @@
-﻿namespace RentApi.Shared.Dto
+﻿using Newtonsoft.Json;
+
+namespace RentApi.Shared.Dto
 {
     public class SearchResultItem
     {
+        [JsonConverter(typeof(EnumTypeConverter<YesNoType>))]
         public YesNoType CarCategoryAirCond { get; set; }
+        [JsonConverter(typeof(EnumTypeConverter<YesNoType>))]
         public YesNoType CarCategoryAutomatic { get; set; }
         public string CarCategoryBaggageQuantity { get; set; }
         public string CarCategoryCode { get; set; }
@@ -10,6 +14,7 @@
         public string CarCategoryName { get; set; }
         public string CarCategorySample { get; set; }
         public string CarCategorySeats { get; set; }
+        [JsonConverter(typeof(EnumTypeConverter<CarCategoryStatusType>))]
         public CarCategoryStatusType CarCategoryStatusCode { get; set; }
         public string ContractId { get; set; }
         public string Currency { get; set; }

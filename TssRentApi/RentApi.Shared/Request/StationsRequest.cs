@@ -1,4 +1,5 @@
-﻿using RentApi.Shared.Dto;
+﻿using Newtonsoft.Json;
+using RentApi.Shared.Dto;
 
 namespace RentApi.Shared.Request
 {
@@ -6,6 +7,7 @@ namespace RentApi.Shared.Request
     {
         public string Content { get; }
         public string Country { get; set; }
+        [JsonConverter(typeof(AreaTypeConverter))]
         public AreaType AreaType { get; set; }
 
         public StationsRequest(string content)
