@@ -7,4 +7,9 @@ namespace RentApi.Shared.Response
     {
         public ExtraResultItem Results { get; set; }
     }
+
+    public class ConfirmResponse : BaseResponse
+    {
+
+    }
 }

@@ -50,5 +50,14 @@ namespace RentApi.Api
 
             return response;
         }
+
+        public async Task<ConfirmResponse> Confirm(ConfirmRequest request)
+        {
+            var path = new Paths.Confirm(_token);
+            var response = await
+                _api.CallRemoteApiAsync<ConfirmRequest, ConfirmResponse>(request, path);
+
+            return response;
+        }
     }
 }

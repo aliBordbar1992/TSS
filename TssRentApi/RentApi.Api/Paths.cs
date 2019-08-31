@@ -52,6 +52,16 @@ namespace RentApi.Api
                 Token = token;
             }
         }
+
+        public class Confirm : ApiPathsBase
+        {
+            public Confirm(string token)
+            {
+                HttpMethod = new HttpMethod("POST");
+                Endpoint = "confirm";
+                Token = token;
+            }
+        }
         
     }
 }

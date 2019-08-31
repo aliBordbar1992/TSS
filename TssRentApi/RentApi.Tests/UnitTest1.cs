@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using FluentAssertions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,7 +60,14 @@ namespace RentApi.Tests
 
             var searchResultItem = searchResult.Results.First();
 
-            var req = new ExtraRequest("CDGT01", DateTime.Now.AddDays(1), "CDGT01", DateTime.Now.AddDays(2), searchResultItem.ContractId, searchResultItem.CarCategoryCode);
+            var req = new ExtraRequest(
+                "CDGT01",
+                DateTime.Now.AddDays(1),
+                "CDGT01",
+                DateTime.Now.AddDays(2),
+                searchResultItem.ContractId,
+                searchResultItem.CarCategoryCode);
+
             var response = _fixtures.CarRent.GetExtra(req).Result;
 
             response.Results.Should().NotBeNull();
@@ -86,10 +94,40 @@ namespace RentApi.Tests
                 searchResultItem.CarCategoryCode,
                 searchResultItem.RateId,
                 "example@test.com",
-                new Driver("+989372346281", "MR", "Ali", "Bordbar"));
+                new Driver("+989372346281", "MR", "Ali", "Bordbar", "2281206696", "Tehran"));
             var response = _fixtures.CarRent.Reserve(req).Result;
 
-            response.Results.Should().NotBeNull();
+            response.Errors.Should().BeNullOrEmpty();
+        }
+
+        [Fact]
+        public void confirming_a_reserve()
+        {
+            //get search result from cache if exits, to avoid sending redundant search request, if not, get it
+            if (!_fixtures.Cache.TryGetValue("_searchResults_test", out SearchResponse searchResult))
+            {
+                searching_for_two_valid_destinations();
+                _fixtures.Cache.TryGetValue("_searchResults_test", out searchResult);
+            }
+
+            var searchResultItem = searchResult.Results.First();
+
+            var reqReserve = new ReserveRequest(
+                "CDGT01",
+                DateTime.Now.AddDays(1),
+                "CDGT01",
+                DateTime.Now.AddDays(2),
+                searchResultItem.ContractId,
+                searchResultItem.CarCategoryCode,
+                searchResultItem.RateId,
+                "example@test.com",
+                new Driver("+989372346281", "MR", "Ali", "Bordbar", "2281206696", "Tehran"));
+            var reserveResponse = _fixtures.CarRent.Reserve(reqReserve).Result;
+
+            var confirmRequest = new ConfirmRequest(reserveResponse.Results.ReserveId);
+            var confirmResponse = _fixtures.CarRent.Confirm(confirmRequest).Result;
+
+            confirmResponse.Errors.Should().BeNullOrEmpty();
         }
     }
 

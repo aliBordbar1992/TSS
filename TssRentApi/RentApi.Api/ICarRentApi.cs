@@ -10,5 +10,6 @@ namespace RentApi.Api
         Task<SearchResponse> Search(SearchRequest request);
         Task<ExtraResponse> GetExtra(ExtraRequest request);
         Task<ReserveResponse> Reserve(ReserveRequest request);
+        Task<ConfirmResponse> Confirm(ConfirmRequest request);
     }
 }

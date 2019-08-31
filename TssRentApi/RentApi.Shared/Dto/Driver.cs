@@ -4,12 +4,14 @@ namespace RentApi.Shared.Dto
 {
     public class Driver
     {
-        public Driver(string mobile, string title, string firstNameEn, string lastNameEn)
+        public Driver(string mobile, string title, string firstNameEn, string lastNameEn, string nationalCode, string address)
         {
             Mobile = mobile;
             Title = title;
             FirstNameEn = firstNameEn;
             LastNameEn = lastNameEn;
+            NationalCode = nationalCode;
+            Address = address;
         }
 
         public string Mobile { get; }
@@ -24,5 +26,8 @@ namespace RentApi.Shared.Dto
         public string LastNameFa { get; set; }
         [JsonProperty("europcarid")]
         public string EuropCarId { get; set; }
+
+        public string NationalCode { get; set; }
+        public string Address { get; set; }
     }
 }
